@@ -66,15 +66,15 @@ export default function SearchDropdown({ isOpen = false, onClose, inline = false
 
   const trailingAction = isPending ? (
     <span className={styles.spinner} role="status" aria-label="Buscando..." />
-  ) : inline && query ? (
-    <button type="button" className={styles.clear} onClick={handleClear}>
-      Borrar
+  ) : inline ? (
+    <button type="button" className={styles.close} onClick={handleClear} aria-label="Borrar búsqueda">
+      <span aria-hidden="true">&times;</span>
     </button>
-  ) : !inline ? (
+  ) : (
     <button type="button" className={styles.close} onClick={onClose} aria-label="Cerrar búsqueda">
       <span aria-hidden="true">&times;</span>
     </button>
-  ) : null;
+  );
 
   const form = (
     <form className={styles.form} onSubmit={handleSubmit} aria-busy={isPending}>
