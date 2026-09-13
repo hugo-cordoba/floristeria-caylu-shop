@@ -48,7 +48,7 @@ export default function CartPageClient() {
         </div>
         <p className={styles.summaryNote}>Envío e impuestos se calculan en el siguiente paso.</p>
 
-        <Link href="/checkout/information" className={styles.checkoutButton}>
+        <Link href="/checkout" className={styles.checkoutButton}>
           Tramitar pedido
         </Link>
 

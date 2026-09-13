@@ -1,0 +1,324 @@
+.page {
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 8vw, 5rem);
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+.pageTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 0;
+}
+
+.sectionIntro {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sectionTitle {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.loginLink {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.loginLink span {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.loginLink:hover span {
+  color: var(--color-text-muted);
+}
+
+/* ---------- Pago (informativo: los datos de tarjeta se piden en Stripe) ---------- */
+
+.paymentOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.paymentOption {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-secondary);
+  cursor: default;
+}
+
+.paymentOptionSelected {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface);
+}
+
+.paymentOptionDisabled {
+  opacity: 0.55;
+}
+
+.paymentLabel {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.paymentIcons {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.paymentUnavailable {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.paymentNote {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.error {
+  font-size: 0.85rem;
+  color: #c0392b;
+}
+
+.payButton {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 1.1rem 1.75rem;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.payButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background-color: var(--color-primary-light);
+}
+
+.payButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---------- Resumen / cesta ---------- */
+
+.summary {
+  position: sticky;
+  top: 6rem;
+  background-color: var(--color-surface);
+  border-radius: 16px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.summaryTitle {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.summaryCount {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.itemRow {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 0.9rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.itemRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.itemImageWrapper {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: var(--color-background);
+  flex: 0 0 auto;
+}
+
+.itemImage {
+  object-fit: cover;
+}
+
+.itemContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.itemTopRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.itemName {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.itemPrice {
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.itemDetail {
+  display: flex;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.itemDetailLabel {
+  min-width: 60px;
+}
+
+.promoRow {
+  display: flex;
+  gap: 0.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.promoInput {
+  flex: 1;
+  min-width: 0;
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-secondary);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-size: 0.85rem;
+}
+
+.promoInput:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.promoButton {
+  flex: 0 0 auto;
+  padding: 0.7rem 1.1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.promoButton:hover {
+  opacity: 0.85;
+}
+
+.promoMessage {
+  margin-top: -0.75rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: 0.25rem;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.grandTotal {
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary {
+    position: static;
+  }
+}
