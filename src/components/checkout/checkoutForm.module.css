@@ -112,6 +112,10 @@
   white-space: nowrap;
 }
 
+.dateField {
+  margin-top: 0.75rem;
+}
+
 .submit {
   align-self: flex-start;
   padding: 0.9rem 2rem;

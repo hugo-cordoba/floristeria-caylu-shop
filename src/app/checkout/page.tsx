@@ -30,7 +30,8 @@ export default function CheckoutPage() {
   const [addressLine2, setAddressLine2] = useState('');
   const [postalCode, setPostalCode] = useState('');
 
-  const [shippingMethodId, setShippingMethodId] = useState(shippingMethods[0].id);
+  const [shippingMethodId, setShippingMethodId] = useState('express');
+  const [deliveryDate, setDeliveryDate] = useState('');
 
   const [agreeShipping, setAgreeShipping] = useState(false);
   const [agreePayment, setAgreePayment] = useState(false);
@@ -51,6 +52,34 @@ export default function CheckoutPage() {
   const selectedShippingMethod =
     shippingMethods.find((method) => method.id === shippingMethodId) ?? shippingMethods[0];
   const total = subtotal + selectedShippingMethod.price;
+
+  const expressMethod = shippingMethods.find((m) => m.id === 'express') ?? shippingMethods[0];
+  const standardMethod = shippingMethods.find((m) => m.id === 'standard') ?? shippingMethods[0];
+
+  const deliveryOptions = [
+    {
+      method: expressMethod,
+      displayLabel: 'Entrega en menos de 48h',
+      displayEta: 'Recibirás tu pedido en menos de 48 horas',
+    },
+    {
+      method: standardMethod,
+      displayLabel: 'Elegir fecha de envío',
+      displayEta: 'Tú decides el día de entrega',
+    },
+  ];
+
+  const minDeliveryDate = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 3);
+    return d.toISOString().split('T')[0];
+  })();
+
+  const maxDeliveryDate = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 30);
+    return d.toISOString().split('T')[0];
+  })();
 
   function handleApplyPromo(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -261,27 +290,43 @@ export default function CheckoutPage() {
           <div className={formStyles.section}>
             <h3 className={formStyles.sectionTitle}>Entrega</h3>
             <div className={formStyles.optionsList}>
-              {shippingMethods.map((method) => (
-                <label
-                  key={method.id}
-                  className={`${formStyles.optionCard} ${
-                    shippingMethodId === method.id ? formStyles.optionCardSelected : ''
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="shippingMethod"
-                    value={method.id}
-                    checked={shippingMethodId === method.id}
-                    onChange={() => setShippingMethodId(method.id)}
-                    style={{ display: 'none' }}
-                  />
-                  <div className={formStyles.optionInfo}>
-                    <span className={formStyles.optionLabel}>{method.label}</span>
-                    <span className={formStyles.optionEta}>{method.etaLabel}</span>
-                  </div>
-                  <span className={formStyles.optionPrice}>{method.priceFormatted}</span>
-                </label>
+              {deliveryOptions.map(({ method, displayLabel, displayEta }) => (
+                <div key={method.id}>
+                  <label
+                    className={`${formStyles.optionCard} ${
+                      shippingMethodId === method.id ? formStyles.optionCardSelected : ''
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="shippingMethod"
+                      value={method.id}
+                      checked={shippingMethodId === method.id}
+                      onChange={() => setShippingMethodId(method.id)}
+                      style={{ display: 'none' }}
+                    />
+                    <div className={formStyles.optionInfo}>
+                      <span className={formStyles.optionLabel}>{displayLabel}</span>
+                      <span className={formStyles.optionEta}>{displayEta}</span>
+                    </div>
+                    <span className={formStyles.optionPrice}>{method.priceFormatted}</span>
+                  </label>
+
+                  {method.id === 'standard' && shippingMethodId === 'standard' && (
+                    <label className={`${formStyles.field} ${formStyles.dateField}`}>
+                      <span className={formStyles.label}>Fecha de envío</span>
+                      <input
+                        type="date"
+                        required
+                        min={minDeliveryDate}
+                        max={maxDeliveryDate}
+                        value={deliveryDate}
+                        onChange={(e) => setDeliveryDate(e.target.value)}
+                        className={formStyles.input}
+                      />
+                    </label>
+                  )}
+                </div>
               ))}
             </div>
           </div>
