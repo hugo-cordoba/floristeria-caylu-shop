@@ -30,12 +30,20 @@ export const authOptions: NextAuthOptions = {
         const valid = await bcrypt.compare(credentials.password, user.password);
         if (!valid) return null;
 
-        return { id: user.id, name: user.fullName, email: user.email, role: user.role };
+        return {
+          id: user.id,
+          name: `${user.firstName} ${user.lastName}`.trim(),
+          email: user.email,
+          role: user.role,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone,
+        };
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       // `user` solo llega en el login inicial; el resto de veces el rol
       // ya vive en el token. Si cambias el rol de alguien en BD, no se
       // reflejará hasta que vuelva a iniciar sesión (limitación normal de
@@ -43,6 +51,18 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
+        token.phone = user.phone;
+      }
+      // updateProfile() llama a session.update(data) tras guardar, para que
+      // el nombre/teléfono se vean al instante sin tener que reloguear.
+      if (trigger === 'update' && session) {
+        token.firstName = session.firstName;
+        token.lastName = session.lastName;
+        token.phone = session.phone;
+        token.email = session.email;
+        token.name = `${session.firstName} ${session.lastName}`.trim();
       }
       return token;
     },
@@ -50,6 +70,9 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         session.user.id = token.id;
         session.user.role = token.role;
+        session.user.firstName = token.firstName;
+        session.user.lastName = token.lastName;
+        session.user.phone = token.phone;
       }
       return session;
     },

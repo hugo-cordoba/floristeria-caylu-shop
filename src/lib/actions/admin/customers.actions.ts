@@ -50,7 +50,8 @@ export async function getAdminCustomers(params: AdminCustomersQuery = {}): Promi
     ...(params.query
       ? {
           OR: [
-            { fullName: { contains: params.query, mode: 'insensitive' } },
+            { firstName: { contains: params.query, mode: 'insensitive' } },
+            { lastName: { contains: params.query, mode: 'insensitive' } },
             { email: { contains: params.query, mode: 'insensitive' } },
           ],
         }
@@ -65,7 +66,8 @@ export async function getAdminCustomers(params: AdminCustomersQuery = {}): Promi
       take: pageSize,
       select: {
         id: true,
-        fullName: true,
+        firstName: true,
+        lastName: true,
         email: true,
         role: true,
         createdAt: true,
@@ -78,7 +80,7 @@ export async function getAdminCustomers(params: AdminCustomersQuery = {}): Promi
   return {
     customers: rows.map((row) => ({
       id: row.id,
-      fullName: row.fullName,
+      fullName: `${row.firstName} ${row.lastName}`.trim(),
       email: row.email,
       role: row.role,
       createdAt: row.createdAt.toISOString(),
@@ -134,7 +136,7 @@ export async function getAdminCustomerById(id: string): Promise<AdminCustomerDet
 
   return {
     id: row.id,
-    fullName: row.fullName,
+    fullName: `${row.firstName} ${row.lastName}`.trim(),
     email: row.email,
     role: row.role,
     createdAt: row.createdAt.toISOString(),

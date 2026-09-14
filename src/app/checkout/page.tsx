@@ -5,15 +5,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
+import { useAddressBook } from '@/context/AddressBookContext';
 import { shippingMethods } from '@/data/shipping.config';
 import { createCheckoutSessionAction } from '@/lib/actions/checkout.actions';
 import { formatPrice } from '@/lib/currency';
+import DeliveryCalendar from '@/components/checkout/DeliveryCalendar';
 import formStyles from '@/components/checkout/checkoutForm.module.css';
 import styles from './page.module.css';
 
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, subtotal, hydrated: cartHydrated } = useCart();
+  const { user, hydrated: authHydrated } = useAuth();
+  const { defaultAddress, hydrated: addressBookHydrated } = useAddressBook();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -33,19 +38,38 @@ export default function CheckoutPage() {
   const [shippingMethodId, setShippingMethodId] = useState('express');
   const [deliveryDate, setDeliveryDate] = useState('');
 
-  const [agreeShipping, setAgreeShipping] = useState(false);
-  const [agreePayment, setAgreePayment] = useState(false);
-
   const [promoCode, setPromoCode] = useState('');
   const [promoMessage, setPromoMessage] = useState<string | null>(null);
 
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  const [hasPrefilled, setHasPrefilled] = useState(false);
+
   useEffect(() => {
     if (!cartHydrated) return;
     if (items.length === 0) router.replace('/cart');
   }, [cartHydrated, items.length, router]);
+
+  useEffect(() => {
+    if (hasPrefilled || !authHydrated) return;
+    if (user) {
+      if (!addressBookHydrated) return;
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setEmail(user.email);
+      setPhone(defaultAddress?.phone ?? user.phone ?? '');
+
+      if (defaultAddress) {
+        setCountry(defaultAddress.country);
+        setCity(defaultAddress.city);
+        setAddressLine1(defaultAddress.addressLine1);
+        setAddressLine2(defaultAddress.addressLine2 ?? '');
+        setPostalCode(defaultAddress.postalCode);
+      }
+    }
+    setHasPrefilled(true);
+  }, [hasPrefilled, authHydrated, addressBookHydrated, user, defaultAddress]);
 
   if (!cartHydrated || items.length === 0) return null;
 
@@ -89,6 +113,12 @@ export default function CheckoutPage() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitError(null);
+
+    if (shippingMethodId === 'standard' && !deliveryDate) {
+      setSubmitError('Selecciona una fecha de envío.');
+      return;
+    }
+
     setIsRedirecting(true);
 
     try {
@@ -127,9 +157,11 @@ export default function CheckoutPage() {
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.sectionIntro}>
             <h2 className={styles.sectionTitle}>Información</h2>
-            <Link href="/?authRequired=1" className={styles.loginLink}>
-              ¿Ya tienes cuenta? <span>Inicia sesión</span>
-            </Link>
+            {authHydrated && !user && (
+              <Link href="/?authRequired=1" className={styles.loginLink}>
+                ¿Ya tienes cuenta? <span>Inicia sesión</span>
+              </Link>
+            )}
           </div>
 
           <div className={formStyles.section}>
@@ -273,18 +305,6 @@ export default function CheckoutPage() {
                 className={formStyles.input}
               />
             </label>
-
-            <label className={formStyles.checkboxRow}>
-              <input
-                type="checkbox"
-                required
-                checked={agreeShipping}
-                onChange={(e) => setAgreeShipping(e.target.checked)}
-              />
-              <span>
-                Acepto el <Link href="/privacy">tratamiento de datos</Link> para la gestión del envío
-              </span>
-            </label>
           </div>
 
           <div className={formStyles.section}>
@@ -313,66 +333,25 @@ export default function CheckoutPage() {
                   </label>
 
                   {method.id === 'standard' && shippingMethodId === 'standard' && (
-                    <label className={`${formStyles.field} ${formStyles.dateField}`}>
+                    <div className={formStyles.dateField}>
                       <span className={formStyles.label}>Fecha de envío</span>
-                      <input
-                        type="date"
-                        required
+                      <DeliveryCalendar
+                        value={deliveryDate}
+                        onChange={setDeliveryDate}
                         min={minDeliveryDate}
                         max={maxDeliveryDate}
-                        value={deliveryDate}
-                        onChange={(e) => setDeliveryDate(e.target.value)}
-                        className={formStyles.input}
                       />
-                    </label>
+                    </div>
                   )}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className={formStyles.section}>
-            <h3 className={formStyles.sectionTitle}>Pago</h3>
-
-            <div className={styles.paymentOptions}>
-              <label className={`${styles.paymentOption} ${styles.paymentOptionSelected}`}>
-                <input type="radio" name="paymentMethod" checked readOnly />
-                <span className={styles.paymentLabel}>Tarjeta de crédito o débito</span>
-                <span className={styles.paymentIcons}>VISA · Mastercard</span>
-              </label>
-              <label className={`${styles.paymentOption} ${styles.paymentOptionDisabled}`}>
-                <input type="radio" name="paymentMethod" disabled />
-                <span className={styles.paymentLabel}>PayPal</span>
-                <span className={styles.paymentUnavailable}>Próximamente</span>
-              </label>
-              <label className={`${styles.paymentOption} ${styles.paymentOptionDisabled}`}>
-                <input type="radio" name="paymentMethod" disabled />
-                <span className={styles.paymentLabel}>Apple Pay</span>
-                <span className={styles.paymentUnavailable}>Próximamente</span>
-              </label>
-            </div>
-
-            <p className={styles.paymentNote}>
-              Introducirás los datos de tu tarjeta de forma segura en la página de pago de Stripe.
-            </p>
-
-            <label className={formStyles.checkboxRow}>
-              <input
-                type="checkbox"
-                required
-                checked={agreePayment}
-                onChange={(e) => setAgreePayment(e.target.checked)}
-              />
-              <span>
-                Acepto el <Link href="/privacy">tratamiento de datos</Link> para el pago
-              </span>
-            </label>
-          </div>
-
           {submitError && <p className={styles.error}>{submitError}</p>}
 
           <button type="submit" className={styles.payButton} disabled={isRedirecting}>
-            {isRedirecting ? 'Redirigiendo a Stripe...' : 'Pagar y realizar pedido'}
+            {isRedirecting ? 'Redirigiendo a Stripe...' : 'Pagar con Stripe'}
           </button>
         </form>
 

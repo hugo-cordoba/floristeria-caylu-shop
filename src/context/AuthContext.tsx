@@ -10,7 +10,11 @@ import { mergeGuestOrdersIntoUserAction } from '@/lib/actions/order.actions';
 
 export interface AuthUser {
   id: string;
+  firstName: string;
+  lastName: string;
+  /** Nombre completo, derivado de firstName + lastName. Se mantiene para no tocar los sitios (header, pedidos, admin...) que ya lo consumen así. */
   fullName: string;
+  phone: string | null;
   email: string;
   role: Role;
 }
@@ -26,7 +30,7 @@ interface AuthContextValue {
   login: (email: string, password: string) => Promise<AuthResult>;
   register: (fullName: string, email: string, password: string) => Promise<AuthResult>;
   logout: () => void;
-  updateProfile: (data: { fullName: string; email: string }) => Promise<AuthResult>;
+  updateProfile: (data: { firstName: string; lastName: string; phone: string; email: string }) => Promise<AuthResult>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -38,7 +42,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const user: AuthUser | null = session?.user
     ? {
         id: session.user.id,
-        fullName: session.user.name ?? '',
+        firstName: session.user.firstName,
+        lastName: session.user.lastName,
+        fullName: `${session.user.firstName} ${session.user.lastName}`.trim(),
+        phone: session.user.phone,
         email: session.user.email ?? '',
         role: session.user.role,
       }
@@ -66,10 +73,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     signOut({ redirect: false });
   }
 
-  async function updateProfile(data: { fullName: string; email: string }): Promise<AuthResult> {
+  async function updateProfile(data: {
+    firstName: string;
+    lastName: string;
+    phone: string;
+    email: string;
+  }): Promise<AuthResult> {
     if (!user) return { ok: false, error: 'No hay sesión activa.' };
     const result = await updateProfileAction(user.id, data);
-    if (result.ok) await update();
+    if (result.ok) await update(data);
     return result;
   }
 

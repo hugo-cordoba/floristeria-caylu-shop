@@ -16,9 +16,14 @@ export async function registerUser(fullName: string, email: string, password: st
   const existing = await prisma.user.findUnique({ where: { email: normalizedEmail } });
   if (existing) return { ok: false, error: 'Ya existe una cuenta con ese email.' };
 
+  // El formulario de registro solo pide un "nombre completo": la primera
+  // palabra se guarda como firstName y el resto (si lo hay) como lastName.
+  const [firstName, ...rest] = fullName.trim().split(/\s+/);
+  const lastName = rest.join(' ');
+
   const hashedPassword = await bcrypt.hash(password, 12);
   await prisma.user.create({
-    data: { fullName, email: normalizedEmail, password: hashedPassword },
+    data: { firstName, lastName, email: normalizedEmail, password: hashedPassword },
   });
 
   return { ok: true };
@@ -26,7 +31,7 @@ export async function registerUser(fullName: string, email: string, password: st
 
 export async function updateProfileAction(
   userId: string,
-  data: { fullName: string; email: string }
+  data: { firstName: string; lastName: string; phone?: string; email: string }
 ) {
   const normalizedEmail = data.email.trim().toLowerCase();
 
@@ -37,7 +42,12 @@ export async function updateProfileAction(
 
   await prisma.user.update({
     where: { id: userId },
-    data: { fullName: data.fullName, email: normalizedEmail },
+    data: {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phone: data.phone || null,
+      email: normalizedEmail,
+    },
   });
 
   return { ok: true };

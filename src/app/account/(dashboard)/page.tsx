@@ -8,7 +8,9 @@ import pageStyles from './AccountProfile.module.css';
 export default function AccountProfilePage() {
   const { user, updateProfile } = useAuth();
 
-  const [fullName, setFullName] = useState(user?.fullName ?? '');
+  const [firstName, setFirstName] = useState(user?.firstName ?? '');
+  const [lastName, setLastName] = useState(user?.lastName ?? '');
+  const [phone, setPhone] = useState(user?.phone ?? '');
   const [email, setEmail] = useState(user?.email ?? '');
   const [feedback, setFeedback] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +22,7 @@ export default function AccountProfilePage() {
     setError(null);
     setFeedback(null);
 
-    const result = await updateProfile({ fullName, email });
+    const result = await updateProfile({ firstName, lastName, phone, email });
     if (!result.ok) {
       setError(result.error ?? 'No se han podido guardar los cambios.');
       return;
@@ -33,16 +35,29 @@ export default function AccountProfilePage() {
       <h1 className={pageStyles.title}>Mi perfil</h1>
 
       <form className={styles.form} onSubmit={handleSubmit}>
-        <label className={styles.field}>
-          <span className={styles.label}>Nombre completo</span>
-          <input
-            type="text"
-            required
-            value={fullName}
-            onChange={(event) => setFullName(event.target.value)}
-            className={styles.input}
-          />
-        </label>
+        <div className={styles.row}>
+          <label className={styles.field}>
+            <span className={styles.label}>Nombre</span>
+            <input
+              type="text"
+              required
+              value={firstName}
+              onChange={(event) => setFirstName(event.target.value)}
+              className={styles.input}
+            />
+          </label>
+
+          <label className={styles.field}>
+            <span className={styles.label}>Apellido</span>
+            <input
+              type="text"
+              required
+              value={lastName}
+              onChange={(event) => setLastName(event.target.value)}
+              className={styles.input}
+            />
+          </label>
+        </div>
 
         <label className={styles.field}>
           <span className={styles.label}>Email</span>
@@ -51,6 +66,16 @@ export default function AccountProfilePage() {
             required
             value={email}
             onChange={(event) => setEmail(event.target.value)}
+            className={styles.input}
+          />
+        </label>
+
+        <label className={styles.field}>
+          <span className={styles.label}>Teléfono</span>
+          <input
+            type="tel"
+            value={phone}
+            onChange={(event) => setPhone(event.target.value)}
             className={styles.input}
           />
         </label>

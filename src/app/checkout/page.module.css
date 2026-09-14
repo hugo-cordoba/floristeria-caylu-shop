@@ -1,6 +1,6 @@
 .page {
   padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 8vw, 5rem);
-  background-color: var(--color-background);
+  background-color: var(--color-surface);
   color: var(--color-text);
 }
 
@@ -57,63 +57,6 @@
   color: var(--color-text-muted);
 }
 
-/* ---------- Pago (informativo: los datos de tarjeta se piden en Stripe) ---------- */
-
-.paymentOptions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.paymentOption {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 1rem 1.25rem;
-  border-radius: 12px;
-  border: 1px solid var(--color-secondary);
-  cursor: default;
-}
-
-.paymentOptionSelected {
-  border-color: var(--color-primary);
-  background-color: var(--color-surface);
-}
-
-.paymentOptionDisabled {
-  opacity: 0.55;
-}
-
-.paymentLabel {
-  flex: 1;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.paymentIcons {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--color-text-muted);
-  white-space: nowrap;
-}
-
-.paymentUnavailable {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--color-text-muted);
-  white-space: nowrap;
-}
-
-.paymentNote {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  line-height: 1.5;
-  margin-bottom: 1rem;
-}
-
 .error {
   font-size: 0.85rem;
   color: #c0392b;
@@ -126,8 +69,8 @@
   padding: 1.1rem 1.75rem;
   border-radius: 10px;
   border: none;
-  background-color: var(--color-primary);
-  color: var(--color-background);
+  background-color: #635bff;
+  color: #ffffff;
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -138,7 +81,7 @@
 
 .payButton:hover:not(:disabled) {
   transform: translateY(-1px);
-  background-color: var(--color-primary-light);
+  background-color: #7a73ff;
 }
 
 .payButton:disabled {

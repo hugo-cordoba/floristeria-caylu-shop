@@ -21,6 +21,8 @@ async function main() {
   const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
   const password = process.env.ADMIN_PASSWORD;
   const fullName = process.env.ADMIN_NAME?.trim() || 'Administrador';
+  const [firstName, ...rest] = fullName.split(/\s+/);
+  const lastName = rest.join(' ');
 
   if (!email || !password) {
     console.error('Faltan variables de entorno. Uso:');
@@ -48,7 +50,7 @@ async function main() {
 
   const hashedPassword = await bcrypt.hash(password, 12);
   const created = await prisma.user.create({
-    data: { fullName, email, password: hashedPassword, role: 'ADMIN' },
+    data: { firstName, lastName, email, password: hashedPassword, role: 'ADMIN' },
   });
   console.log(`Usuario ADMIN creado: ${created.email} (id ${created.id}).`);
 }

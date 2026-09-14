@@ -9,12 +9,7 @@ export default function CheckoutLayout({ children }: { children: React.ReactNode
   return (
     <CheckoutProvider>
       <div className={styles.pageWrapper}>
-        <Header
-          siteName={siteConfig.name}
-          navLinks={siteNavLinks}
-          wishlistHref="/account/wishlist"
-          cartHref="/cart"
-        />
+        <Header siteName={siteConfig.name} minimal />
         <main className={styles.main}>{children}</main>
         <Footer siteName={siteConfig.name} navLinks={siteNavLinks} {...footerContent} />
       </div>

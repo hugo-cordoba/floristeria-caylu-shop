@@ -3,6 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { Search, ShoppingBag, User } from 'lucide-react';
 import type { NavLink } from '@/types/section.types';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
@@ -23,6 +24,7 @@ interface HeaderProps {
   cartHref?: string;
   cartLabel?: string;
   cartCount?: number;
+  minimal?: boolean;
 }
 
 export default function Header({
@@ -34,6 +36,7 @@ export default function Header({
   wishlistLabel = 'Wishlist',
   cartLabel = 'Cesta',
   cartCount,
+  minimal = false,
 }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
@@ -122,6 +125,20 @@ export default function Header({
     }
   }
 
+  if (minimal) {
+    return (
+      <header className={`${styles.header} ${styles.headerMinimal}`}>
+        <div className={styles.bar}>
+          <span />
+          <Link href="/" className={styles.logo}>
+            {siteName}
+          </Link>
+          <span />
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header className={styles.header}>
       <div className={styles.bar}>
@@ -142,6 +159,17 @@ export default function Header({
           >
             <span className={styles.menuIcon} />
           </button>
+
+          <button
+            type="button"
+            onClick={toggleSearch}
+            className={`${styles.iconButton} ${styles.mobileOnly} ${isSearchPage && !anyPanelOpen ? styles.actionButtonActive : ''}`}
+            aria-expanded={searchOpen}
+            aria-controls="search-dropdown"
+            aria-label={searchLabel}
+          >
+            <Search size={20} aria-hidden="true" />
+          </button>
         </div>
 
         <Link href="/" className={styles.logo}>
@@ -152,7 +180,7 @@ export default function Header({
           <button
             type="button"
             onClick={toggleSearch}
-            className={`${styles.actionButton} ${isSearchPage && !anyPanelOpen ? styles.actionButtonActive : ''}`}
+            className={`${styles.actionButton} ${styles.hideOnMobile} ${isSearchPage && !anyPanelOpen ? styles.actionButtonActive : ''}`}
             aria-expanded={searchOpen}
             aria-controls="search-dropdown"
             aria-current={isSearchPage && !anyPanelOpen ? 'page' : undefined}
@@ -163,19 +191,23 @@ export default function Header({
           {authHydrated && user ? (
             <Link
               href="/account"
-              className={`${styles.actionLink} ${styles.hideOnMobile}`}
+              className={styles.actionLink}
               aria-current={pathname === '/account' && !anyPanelOpen ? 'page' : undefined}
+              aria-label={user.fullName.split(' ')[0]}
             >
-              {user.fullName.split(' ')[0]}
+              <User size={20} className={styles.mobileOnly} aria-hidden="true" />
+              <span className={styles.hideOnMobile}>{user.fullName.split(' ')[0]}</span>
             </Link>
           ) : (
             <button
               type="button"
               onClick={openAuth}
-              className={`${styles.actionButton} ${styles.hideOnMobile}`}
+              className={styles.actionButton}
               aria-expanded={authOpen}
+              aria-label={loginLabel}
             >
-              {loginLabel}
+              <User size={20} className={styles.mobileOnly} aria-hidden="true" />
+              <span className={styles.hideOnMobile}>{loginLabel}</span>
             </button>
           )}
 
@@ -195,8 +227,15 @@ export default function Header({
             className={`${styles.actionLink} ${styles.cartTrigger} ${cartBump ? styles.bump : ''}`}
             onAnimationEnd={() => setCartBump(false)}
             aria-expanded={cartOpen}
+            aria-label={`${cartLabel} (${displayCartCount})`}
           >
-            {cartLabel} ({displayCartCount})
+            <span className={`${styles.iconWrapper} ${styles.mobileOnly}`}>
+              <ShoppingBag size={20} aria-hidden="true" />
+              {displayCartCount > 0 && <span className={styles.badge}>{displayCartCount}</span>}
+            </span>
+            <span className={styles.hideOnMobile}>
+              {cartLabel} ({displayCartCount})
+            </span>
           </button>
         </div>
       </div>
