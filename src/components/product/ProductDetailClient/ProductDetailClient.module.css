@@ -32,10 +32,6 @@
   position: relative;
   flex: 1 1 auto;
   width: 100%;
-  /* Cuadrado: al fijar el ancho máximo a ~70% de la altura de pantalla,
-     el alto (vía aspect-ratio) queda también en ese ~70vh, y el ancho
-     se autolimita al espacio disponible de la columna (nunca desborda). */
-  max-width: min(70vh, 760px);
   aspect-ratio: 1 / 1;
   border-radius: 16px;
   overflow: hidden;
@@ -44,8 +40,7 @@
 }
 
 .mainImage {
-  object-fit: contain;
-  padding: 1.25rem;
+  object-fit: cover;
 }
 
 .thumbnail {
@@ -427,7 +422,7 @@
        derecha de la imagen, ya reducida por max-width) a un ancho fijo
        que encaja exactamente miniaturas + gap + imagen, así el gap del
        grid es el único espacio real entre imagen y texto. */
-    grid-template-columns: calc(min(58vh, 800px) + 52px) minmax(0, 560px);
+    grid-template-columns: calc(min(66vh, 880px) + 52px) minmax(0, 560px);
     justify-content: center;
     padding: 1.25rem clamp(1.25rem, 4vw, 2.5rem) 1.5rem;
     gap: clamp(1rem, 3vw, 2rem);
@@ -439,11 +434,7 @@
   }
 
   .mainImageWrapper {
-    max-width: min(58vh, 800px);
-  }
-
-  .mainImage {
-    padding: 0.85rem;
+    max-width: min(66vh, 880px);
   }
 
   .thumbnail {
