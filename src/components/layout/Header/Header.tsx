@@ -1,3 +1,4 @@
+// src/components/layout/Header/Header.tsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -7,6 +8,7 @@ import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { useAuth } from '@/context/AuthContext';
 import AuthSidebar from '@/components/auth/AuthSidebar/AuthSidebar';
+import CartSidebar from '@/components/cart/CartSidebar/CartSidebar';
 import SearchDropdown from '@/components/product/SearchDropdown/SearchDropdown';
 import styles from './Header.module.css';
 import { usePathname } from 'next/navigation';
@@ -30,13 +32,13 @@ export default function Header({
   loginLabel = 'Iniciar sesión',
   wishlistHref = '#',
   wishlistLabel = 'Wishlist',
-  cartHref = '#',
   cartLabel = 'Cesta',
   cartCount,
 }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const { itemCount } = useCart();
   const { itemCount: wishlistItemCount } = useWishlist();
   const { user, hydrated: authHydrated } = useAuth();
@@ -47,6 +49,7 @@ export default function Header({
   const [wishlistBump, setWishlistBump] = useState(false);
   const pathname = usePathname();
   const isSearchPage = pathname === '/search';
+  const anyPanelOpen = searchOpen || authOpen || cartOpen;
 
   useEffect(() => {
     if (displayCartCount > prevCartCountRef.current) setCartBump(true);
@@ -58,30 +61,26 @@ export default function Header({
     prevWishlistCountRef.current = wishlistItemCount;
   }, [wishlistItemCount]);
 
-  // Bloquea el scroll en <html>, no en <body>: <html> tiene overflow-y:
-  // scroll explícito en globals.css, así que es el elemento que realmente
-  // hace scroll (no hereda el "propagation to viewport" que usaría body).
-  // Bloquear body en su lugar lo convierte en su propio contenedor de
-  // scroll y rompe el position: sticky del header.
   useEffect(() => {
-    document.documentElement.style.overflow = menuOpen || authOpen || searchOpen ? 'hidden' : '';
+    document.documentElement.style.overflow = menuOpen || authOpen || searchOpen || cartOpen ? 'hidden' : '';
     return () => {
       document.documentElement.style.overflow = '';
     };
-  }, [menuOpen, authOpen, searchOpen]);
+  }, [menuOpen, authOpen, searchOpen, cartOpen]);
 
   useEffect(() => {
-    if (!menuOpen && !authOpen && !searchOpen) return;
+    if (!menuOpen && !authOpen && !searchOpen && !cartOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setMenuOpen(false);
         setAuthOpen(false);
         setSearchOpen(false);
+        setCartOpen(false);
       }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [menuOpen, authOpen, searchOpen]);
+  }, [menuOpen, authOpen, searchOpen, cartOpen]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -97,13 +96,22 @@ export default function Header({
   function openAuth() {
     setMenuOpen(false);
     setSearchOpen(false);
+    setCartOpen(false);
     setAuthOpen(true);
+  }
+
+  function openCart() {
+    setMenuOpen(false);
+    setAuthOpen(false);
+    setSearchOpen(false);
+    setCartOpen(true);
   }
 
   function toggleSearch() {
     if (isSearchPage) return;
     setMenuOpen(false);
     setAuthOpen(false);
+    setCartOpen(false);
     setSearchOpen((open) => !open);
   }
 
@@ -125,6 +133,7 @@ export default function Header({
             onClick={() => {
               setAuthOpen(false);
               setSearchOpen(false);
+              setCartOpen(false);
               setMenuOpen((open) => !open);
             }}
             aria-expanded={menuOpen}
@@ -143,20 +152,29 @@ export default function Header({
           <button
             type="button"
             onClick={toggleSearch}
-            className={`${styles.actionButton} ${isSearchPage ? styles.actionButtonActive : ''}`}
+            className={`${styles.actionButton} ${isSearchPage && !anyPanelOpen ? styles.actionButtonActive : ''}`}
             aria-expanded={searchOpen}
             aria-controls="search-dropdown"
-            aria-current={isSearchPage ? 'page' : undefined}
+            aria-current={isSearchPage && !anyPanelOpen ? 'page' : undefined}
           >
             {searchLabel}
           </button>
 
           {authHydrated && user ? (
-            <Link href="/account" className={`${styles.actionLink} ${styles.hideOnMobile}`}>
+            <Link
+              href="/account"
+              className={`${styles.actionLink} ${styles.hideOnMobile}`}
+              aria-current={pathname === '/account' && !anyPanelOpen ? 'page' : undefined}
+            >
               {user.fullName.split(' ')[0]}
             </Link>
           ) : (
-            <button type="button" onClick={openAuth} className={`${styles.actionButton} ${styles.hideOnMobile}`}>
+            <button
+              type="button"
+              onClick={openAuth}
+              className={`${styles.actionButton} ${styles.hideOnMobile}`}
+              aria-expanded={authOpen}
+            >
               {loginLabel}
             </button>
           )}
@@ -166,16 +184,20 @@ export default function Header({
             className={`${styles.actionLink} ${styles.hideOnMobile} ${wishlistBump ? styles.bump : ''}`}
             onClick={handleWishlistClick}
             onAnimationEnd={() => setWishlistBump(false)}
+            aria-current={pathname === wishlistHref && !anyPanelOpen ? 'page' : undefined}
           >
             {wishlistLabel} ({wishlistItemCount})
           </Link>
-          <Link
-            href={cartHref}
-            className={`${styles.actionLink} ${cartBump ? styles.bump : ''}`}
+
+          <button
+            type="button"
+            onClick={openCart}
+            className={`${styles.actionLink} ${styles.cartTrigger} ${cartBump ? styles.bump : ''}`}
             onAnimationEnd={() => setCartBump(false)}
+            aria-expanded={cartOpen}
           >
             {cartLabel} ({displayCartCount})
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -222,6 +244,7 @@ export default function Header({
       </aside>
 
       <AuthSidebar isOpen={authOpen} onClose={() => setAuthOpen(false)} />
+      <CartSidebar isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </header>
   );
 }

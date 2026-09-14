@@ -97,6 +97,14 @@
   transform: scaleX(1.2) scaleY(1.5);
 }
 
+.cartTrigger {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
@@ -272,7 +280,11 @@
   animation: actionBump 0.5s ease;
 }
 
-.actionButtonActive {
+.actionButtonActive,
+.actionButton[aria-expanded='true'],
+.actionButton[aria-current='page'],
+.actionLink[aria-expanded='true'],
+.actionLink[aria-current='page'] {
   font-weight: 700;
   color: var(--color-text);
 }
