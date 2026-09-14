@@ -7,9 +7,6 @@ import styles from './Footer.module.css';
 const legalLinks = [
   { label: 'Privacidad', href: '/privacy' },
   { label: 'Términos y condiciones', href: '/terms' },
-  { label: 'Cookies', href: '/cookies' },
-  { label: 'Devoluciones', href: '/returns' },
-  { label: 'Envíos', href: '/shipping-policy' },
 ];
 
 /**
