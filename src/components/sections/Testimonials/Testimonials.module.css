@@ -49,16 +49,12 @@
 }
 
 .track {
+  --sets: 2;
   display: flex;
   width: max-content;
-  /* Sin padding aqui: el -50% del keyframe debe ser exactamente la
-     mitad del ancho de contenido (las 8 tarjetas duplicadas), si no el
-     punto de reinicio del loop queda desplazado y se ve un salto. */
   animation: testimonialsScroll 42s linear infinite;
 }
 
-/* Misma pista y mismo punto de reinicio en -50%, pero recorrido en
-   sentido inverso: gira hacia la derecha en vez de hacia la izquierda. */
 .trackReverse {
   animation-name: testimonialsScroll;
   animation-duration: 38s;
@@ -74,29 +70,22 @@
     transform: translateX(0);
   }
   to {
-    /* La pista contiene la lista duplicada (ver Testimonials.tsx), así
-       que recorrer exactamente el 50% enlaza con el principio sin salto. */
-    transform: translateX(-50%);
+    transform: translateX(calc(-100% / var(--sets, 2)));
   }
 }
 
 .card {
   flex: 0 0 auto;
-  width: min(260px, 68vw);
+  width: min(340px, 82vw);
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-  padding: 1rem 1.15rem;
+  gap: 0.55rem;
+  padding: 0.8rem 1.25rem;
   border-radius: 18px;
   background-color: var(--color-surface);
   border: 1px solid rgba(0, 0, 0, 0.12);
   transition: border-color 0.2s ease;
   cursor: pointer;
-  /* Margen (no gap de flex) en TODOS los cards, incluido el último de la
-     pista: así la pista duplicada queda perfectamente simétrica y el
-     translateX(-50%) cae exactamente donde empieza la copia, sin el
-     micro-salto que deja un gap de flex (que no se aplica tras el
-     último elemento). */
   margin-right: 1.25rem;
 }
 

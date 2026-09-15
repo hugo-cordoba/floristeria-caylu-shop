@@ -70,6 +70,16 @@ export const landingSections: SectionConfig[] = [
     },
   },
   {
+    id: 'destacado-2',
+    type: 'featureBanner',
+    props: {
+      title: 'Ofertas por tiempo limitado',
+      description: 'Aprovecha los descuentos de esta temporada antes de que se agoten.',
+      ctaLabel: 'Ver ofertas',
+      ctaHref: '/products?maxPrice=50',
+    },
+  },
+  {
     id: 'testimonios',
     type: 'testimonials',
     props: {
