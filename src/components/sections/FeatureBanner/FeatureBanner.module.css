@@ -1,7 +1,22 @@
 .section {
+  position: relative;
   background-color: var(--color-primary);
+  background-size: cover;
+  background-position: center;
   color: var(--color-background);
   padding: clamp(1.75rem, 4vw, 3rem) clamp(1.5rem, 5vw, 4rem);
+}
+
+.section[style*='background-image']::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 35%, rgba(0, 0, 0, 0) 70%);
+}
+
+.text,
+.products {
+  position: relative;
 }
 
 .text {

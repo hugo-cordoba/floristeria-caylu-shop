@@ -55,6 +55,7 @@ export interface FeatureBannerProps {
   ctaLabel?: string;
   ctaHref?: string;
   products?: Product[];
+  backgroundImage?: string;
 }
 
 export interface Category {

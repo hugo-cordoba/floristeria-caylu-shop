@@ -58,6 +58,7 @@ export const landingSections: SectionConfig[] = [
       description: 'Bloque de ancho completo con el color principal de marca, ideal para campañas o lanzamientos.',
       ctaLabel: 'Comprar ahora',
       ctaHref: '#productos',
+      backgroundImage: '/section1.png',
     },
   },
   {

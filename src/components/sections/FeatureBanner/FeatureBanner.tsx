@@ -3,9 +3,12 @@ import ProductCard from '@/components/ui/ProductCard/ProductCard';
 import type { FeatureBannerProps } from '@/types/section.types';
 import styles from './FeatureBanner.module.css';
 
-export default function FeatureBanner({ title, description, ctaLabel, ctaHref, products }: FeatureBannerProps) {
+export default function FeatureBanner({ title, description, ctaLabel, ctaHref, products, backgroundImage }: FeatureBannerProps) {
   return (
-    <section className={styles.section}>
+    <section
+      className={styles.section}
+      style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : undefined}
+    >
       <div className={styles.text}>
         <h2 className={styles.title}>{title}</h2>
         {description && <p className={styles.description}>{description}</p>}
