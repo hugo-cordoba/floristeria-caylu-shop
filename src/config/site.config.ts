@@ -11,7 +11,7 @@ export const siteConfig = {
     primary: '#27272a',
     primaryLight: '#52525b',
     secondary: '#a1a1aa',
-    background: '#f4f4f5',
+    background: '#ffffff',
     surface: '#ffffff',
     text: '#18181b',
     textMuted: '#71717a',

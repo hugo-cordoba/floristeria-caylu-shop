@@ -1,4 +1,4 @@
-import type { SectionConfig, NavLink, SocialLink } from '@/types/section.types';
+import type { SectionConfig, NavLink } from '@/types/section.types';
 
 /**
  * Enlaces de navegacion compartidos, usados por el Header fijo.
@@ -70,6 +70,19 @@ export const landingSections: SectionConfig[] = [
     },
   },
   {
+    id: 'testimonios',
+    type: 'testimonials',
+    props: {
+      title: '¿Qué opinan nuestros clientes?',
+      testimonials: [
+        { authorName: 'Laura Nguyen', authorRole: 'Directora de tienda', quote: 'El proceso de compra es clarísimo, nuestros clientes lo notan.' },
+        { authorName: 'Carlos Díaz', authorRole: 'Cliente habitual', quote: 'Envíos rápidos y la web es muy fácil de usar.' },
+        { authorName: 'Liam Johnson', authorRole: 'Cliente', quote: 'La atención al cliente resolvió mi duda en minutos.' },
+        { authorName: 'Sofía Carter', authorRole: 'Cliente', quote: 'Desde que compro aquí no he tenido ni un problema.' },
+      ],
+    },
+  },
+  {
     id: 'nosotros',
     type: 'splitIntro',
     props: {
@@ -86,18 +99,5 @@ export const landingSections: SectionConfig[] = [
 ];
 
 export const footerContent = {
-  slogan: 'Escribe aquí tu eslogan',
-  socialLinks: [
-    { label: 'Facebook', initial: 'F', href: '#' },
-    { label: 'Twitter', initial: 'T', href: '#' },
-    { label: 'LinkedIn', initial: 'L', href: '#' },
-    { label: 'WhatsApp', initial: 'W', href: '#' },
-    { label: 'Instagram', initial: 'I', href: '#' },
-  ] as SocialLink[],
-  aboutTitle: 'Sobre nosotros',
-  aboutText:
-    'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
-  phone: '+0123 456 789 00',
   email: 'user@example.com',
-  newsletterPlaceholder: 'Escribe tu email',
 };

@@ -5,6 +5,7 @@ import FeatureBanner from './FeatureBanner/FeatureBanner';
 import CategoryGrid from './CategoryGrid/CategoryGrid';
 import PromoGrid from './PromoGrid/PromoGrid';
 import type { SectionConfig } from '@/types/section.types';
+import Testimonials from './Testimonials/Testimonials';
 
 export default function SectionRenderer({ sections }: { sections: SectionConfig[] }) {
   return (
@@ -23,6 +24,8 @@ export default function SectionRenderer({ sections }: { sections: SectionConfig[
             return <CategoryGrid key={section.id} {...section.props} />;
           case 'promoGrid':
             return <PromoGrid key={section.id} {...section.props} />;
+          case 'testimonials':
+            return <Testimonials key={section.id} {...section.props} />;
           default:
             return null;
         }

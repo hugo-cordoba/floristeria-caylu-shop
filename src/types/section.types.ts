@@ -72,6 +72,19 @@ export interface PromoGridProps {
   promos: PromoBanner[];
 }
 
+export interface Testimonial {
+  quote: string;
+  authorName: string;
+  authorRole: string;
+  rating?: number;
+  avatar?: string;
+}
+
+export interface TestimonialsProps {
+  title: string;
+  testimonials: Testimonial[];
+}
+
 /**
  * Union discriminada: cada seccion de la landing es un objeto con
  * "type" + "props" tipados. Esto es lo que permite que SectionRenderer
@@ -83,7 +96,8 @@ export type SectionConfig =
   | { id: string; type: 'productCarousel'; props: ProductCarouselProps }
   | { id: string; type: 'featureBanner'; props: FeatureBannerProps }
   | { id: string; type: 'categoryGrid'; props: CategoryGridProps }
-  | { id: string; type: 'promoGrid'; props: PromoGridProps };
+  | { id: string; type: 'promoGrid'; props: PromoGridProps }
+  | { id: string; type: 'testimonials'; props: TestimonialsProps };
 
 export interface SocialLink {
   label: string;
