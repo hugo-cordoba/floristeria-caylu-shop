@@ -98,10 +98,30 @@ export type SectionConfig =
   | { id: string; type: 'featureBanner'; props: FeatureBannerProps }
   | { id: string; type: 'categoryGrid'; props: CategoryGridProps }
   | { id: string; type: 'promoGrid'; props: PromoGridProps }
-  | { id: string; type: 'testimonials'; props: TestimonialsProps };
+  | { id: string; type: 'testimonials'; props: TestimonialsProps }
+  | { id: string; type: 'instagramFeed'; props: InstagramFeedProps };
 
 export interface SocialLink {
   label: string;
   initial: string;
   href: string;
+}
+
+export interface InstagramPost {
+  id: string;
+  image: string;
+  href: string;
+}
+
+export interface InstagramFeedProps {
+  username: string;
+  displayName?: string;
+  profileImage: string;
+  bio?: string;
+  postsCount: number;
+  followersCount: number;
+  followingCount: number;
+  profileHref: string;
+  ctaLabel?: string;
+  posts: InstagramPost[];
 }
