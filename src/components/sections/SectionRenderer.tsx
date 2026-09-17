@@ -5,7 +5,6 @@ import FeatureBanner from './FeatureBanner/FeatureBanner';
 import CategoryGrid from './CategoryGrid/CategoryGrid';
 import PromoGrid from './PromoGrid/PromoGrid';
 import Testimonials from './Testimonials/Testimonials';
-import InstagramFeed from './InstagramFeed/InstagramFeed'; // NUEVO
 import type { SectionConfig } from '@/types/section.types';
 
 export default function SectionRenderer({ sections }: { sections: SectionConfig[] }) {
@@ -27,8 +26,6 @@ export default function SectionRenderer({ sections }: { sections: SectionConfig[
             return <PromoGrid key={section.id} {...section.props} />;
           case 'testimonials':
             return <Testimonials key={section.id} {...section.props} />;
-          case 'instagramFeed':
-            return <InstagramFeed key={section.id} {...section.props} />;
           default:
             return null;
         }
