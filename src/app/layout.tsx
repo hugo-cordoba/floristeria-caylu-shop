@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { siteConfig } from '@/config/site.config';
 import { getCart } from '@/lib/actions/cart.actions';
 import { getWishlist } from '@/lib/actions/wishlist.actions';
@@ -22,6 +22,12 @@ const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.description,
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
