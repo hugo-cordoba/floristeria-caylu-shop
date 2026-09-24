@@ -17,9 +17,13 @@ services:
       - internal
     labels:
       - traefik.enable=true
-      - traefik.http.routers.${CLIENT_SLUG}.rule=Host(`${CLIENT_DOMAIN}`)
+      - traefik.http.routers.${CLIENT_SLUG}.rule=Host(`${CLIENT_DOMAIN}`) || Host(`www.${CLIENT_DOMAIN}`)
       - traefik.http.routers.${CLIENT_SLUG}.entrypoints=websecure
       - traefik.http.routers.${CLIENT_SLUG}.tls.certresolver=le
+      - traefik.http.routers.${CLIENT_SLUG}.middlewares=${CLIENT_SLUG}-nowww
+      - traefik.http.middlewares.${CLIENT_SLUG}-nowww.redirectregex.regex=^https://www\.(.*)
+      - traefik.http.middlewares.${CLIENT_SLUG}-nowww.redirectregex.replacement=https://$${1}
+      - traefik.http.middlewares.${CLIENT_SLUG}-nowww.redirectregex.permanent=true
       - traefik.http.services.${CLIENT_SLUG}.loadbalancer.server.port=3000
 
 networks:

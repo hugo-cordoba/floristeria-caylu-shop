@@ -20,7 +20,10 @@ const envSchema = z.object({
   R2_PUBLIC_URL: z.string().url().optional(),
 });
 
-const parsed = envSchema.safeParse(process.env);
+const rawEnv = Object.fromEntries(
+  Object.entries(process.env).filter(([, v]) => v !== undefined && v !== '')
+);
+const parsed = envSchema.safeParse(rawEnv);
 
 if (!parsed.success) {
   console.error('❌ Variables de entorno inválidas o faltantes:');
