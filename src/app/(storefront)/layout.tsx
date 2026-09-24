@@ -9,6 +9,7 @@ export default function StorefrontLayout({ children }: { children: React.ReactNo
     <div className={styles.pageWrapper}>
       <Header
         siteName={siteConfig.name}
+        siteNameFull={siteConfig.description}
         navLinks={siteNavLinks}
         wishlistHref="/account/wishlist"
         cartHref="/cart"

@@ -14,10 +14,11 @@ import CookieConsentBanner from '@/components/layout/CookieConsent/CookieConsent
 import CookiePreferencesModal from '@/components/layout/CookieConsent/CookiePreferencesModal';
 import './globals.css';
 import '@/lib/env';
-import { Inter } from "next/font/google";
+import { Inter, Great_Vibes } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
+const script = Great_Vibes({ subsets: ['latin'], weight: '400', variable: '--font-script' });
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -46,7 +47,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   } as React.CSSProperties;
 
   return (
-    <html lang="es" className={cn("font-sans", inter.variable)}>
+    <html lang="es" className={cn("font-sans", inter.variable, script.variable)}>
       <body style={themeVars}>
         <CookieConsentProvider>
           <AuthSessionProvider>

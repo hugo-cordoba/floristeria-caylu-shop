@@ -14,13 +14,10 @@
 }
 
 .brand {
-  justify-self: start;
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: inherit;
-  text-decoration: none;
+  font-family: var(--font-script), cursive;
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 .navList {

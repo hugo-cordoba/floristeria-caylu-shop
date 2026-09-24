@@ -16,6 +16,7 @@ import { usePathname } from 'next/navigation';
 
 interface HeaderProps {
   siteName: string;
+  siteNameFull?: string;
   navLinks?: NavLink[];
   searchLabel?: string;
   loginLabel?: string;
@@ -29,6 +30,7 @@ interface HeaderProps {
 
 export default function Header({
   siteName,
+  siteNameFull = siteName,
   navLinks = [],
   searchLabel = 'Buscar',
   loginLabel = 'Iniciar sesión',
@@ -131,7 +133,8 @@ export default function Header({
         <div className={styles.bar}>
           <span />
           <Link href="/" className={styles.logo}>
-            {siteName}
+            <span className={styles.hideOnMobile}>{siteNameFull}</span>
+            <span className={styles.mobileOnly}>{siteName}</span>
           </Link>
           <span />
         </div>
@@ -173,7 +176,8 @@ export default function Header({
         </div>
 
         <Link href="/" className={styles.logo}>
-          {siteName}
+          <span className={styles.hideOnMobile}>{siteNameFull}</span>
+          <span className={styles.mobileOnly}>{siteName}</span>
         </Link>
 
         <div className={styles.actions}>

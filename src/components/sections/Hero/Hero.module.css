@@ -1,6 +1,7 @@
 .hero {
   position: relative;
-  height: 93vh;
+  height: 90dvh;
+  max-height: 90dvh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -68,26 +69,29 @@
 
 .eyebrow {
   display: inline-block;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   margin-bottom: 1rem;
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
 .title {
   font-family: var(--font-heading);
-  font-size: clamp(2.75rem, 7vw, 5rem);
-  line-height: 1.02;
-  font-weight: 500;
+  font-size: clamp(2.25rem, 4.2vw, 3.25rem);
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 .subtitle {
-  margin-top: 1.25rem;
-  font-size: 1.05rem;
-  line-height: 1.5;
-  max-width: 480px;
-  opacity: 0.92;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 420px;
+  opacity: 0.85;
 }
 
 .cta {
@@ -100,8 +104,8 @@
   }
 
   .hero {
-    height: 100vh;
-    justify-content: flex-start;
+    height: 90dvh;
+    justify-content: flex-end;
   }
 
   .mediaDesktop {
@@ -123,12 +127,14 @@
   }
 
   .content {
-    padding-top: 6.5rem;
+    padding-bottom: 14vh;
     max-width: 100%;
+    text-align: center;
   }
 
   .title {
     font-size: clamp(2rem, 9vw, 2.5rem);
+    font-weight: 700;
   }
 
   .subtitle {

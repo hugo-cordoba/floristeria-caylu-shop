@@ -11,6 +11,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
     <div className={styles.pageWrapper}>
       <Header
         siteName={siteConfig.name}
+        siteNameFull={siteConfig.description}
         navLinks={siteNavLinks}
         wishlistHref="/account/wishlist"
         cartHref="/cart"

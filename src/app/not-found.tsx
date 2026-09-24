@@ -10,6 +10,7 @@ export default function NotFound() {
     <div className={styles.pageWrapper}>
       <Header
         siteName={siteConfig.name}
+        siteNameFull={siteConfig.description}
         navLinks={siteNavLinks}
         wishlistHref="/account/wishlist"
         cartHref="/cart"

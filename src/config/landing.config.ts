@@ -29,17 +29,14 @@ export const landingSections: SectionConfig[] = [
     id: 'hero',
     type: 'hero',
     props: {
-      eyebrow: 'Nueva coleccion',
-      title: 'Tu Marca',
-      subtitle:
-        'Descripcion breve y clara de la propuesta de valor. Sustituye este texto por el del cliente.',
+      title: 'Flores para cada momento',
       media: {
         type: 'image',
         src: '/banner.png',
         mobileSrc: '/banner-mobile.png',
       },
-      ctaLabel: 'Ver catalogo',
-      ctaHref: '#productos',
+      ctaLabel: 'Ver todos los productos',
+      ctaHref: '/products',
     },
   },
   {
