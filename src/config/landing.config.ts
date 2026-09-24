@@ -36,6 +36,7 @@ export const landingSections: SectionConfig[] = [
       media: {
         type: 'image',
         src: '/banner.png',
+        mobileSrc: '/banner-mobile.png',
       },
       ctaLabel: 'Ver catalogo',
       ctaHref: '#productos',

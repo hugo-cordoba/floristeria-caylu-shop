@@ -18,7 +18,26 @@ export default function Hero({ eyebrow, title, subtitle, media, ctaLabel, ctaHre
           playsInline
         />
       ) : (
-        <Image src={media.src} alt="" fill priority sizes="100vw" className={styles.media} />
+        <>
+          <Image
+            src={media.src}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className={media.mobileSrc ? `${styles.media} ${styles.mediaDesktop}` : styles.media}
+          />
+          {media.mobileSrc && (
+            <Image
+              src={media.mobileSrc}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className={`${styles.media} ${styles.mediaMobile}`}
+            />
+          )}
+        </>
       )}
       <div className={styles.overlay} />
 

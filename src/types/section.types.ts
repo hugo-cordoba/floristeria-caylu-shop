@@ -13,6 +13,7 @@ export interface HeroProps {
   media: {
     type: 'image' | 'video';
     src: string;
+    mobileSrc?: string;
     poster?: string;
   };
   ctaLabel?: string;
