@@ -137,8 +137,10 @@
   .title {
     align-self: flex-end;
     text-align: right;
-    font-size: clamp(2.25rem, 10vw, 3rem);
-    font-weight: 700;
+    font-size: clamp(2.5rem, 11vw, 3.4rem);
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 0.92;
   }
 
   .titleWord {
@@ -152,7 +154,7 @@
 
   .cta {
     align-self: center;
-    margin-top: 12vh;
+    margin-top: 18vh;
   }
 
   .cta a {
@@ -160,10 +162,15 @@
     background-color: #ffffff;
     color: var(--color-text);
     border-color: transparent;
-    padding: 0.9rem 1.75rem;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.75rem;
   }
 
   .cta a:hover {
     background-color: #f0f0f0;
+  }
+
+  .ctaArrow {
+    margin-left: 0.5rem;
   }
 }
