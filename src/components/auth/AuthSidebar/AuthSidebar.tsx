@@ -3,7 +3,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { requestPasswordResetAction } from '@/lib/actions/auth.actions';
-import { useDelayedUnmount } from '@/hooks/use-delayed-unmount';
 import styles from './AuthSidebar.module.css';
 
 interface AuthSidebarProps {
@@ -15,7 +14,6 @@ type AuthMode = 'login' | 'register' | 'forgot';
 
 export default function AuthSidebar({ isOpen, onClose }: AuthSidebarProps) {
   const { login, register } = useAuth();
-  const showOverlay = useDelayedUnmount(isOpen, 400);
 
   const [mode, setMode] = useState<AuthMode>('login');
   const [fullName, setFullName] = useState('');
@@ -93,9 +91,7 @@ export default function AuthSidebar({ isOpen, onClose }: AuthSidebarProps) {
 
   return (
     <>
-      {showOverlay && (
-        <div className={styles.overlay} data-open={isOpen} onClick={onClose} aria-hidden="true" />
-      )}
+      <div className={styles.overlay} data-open={isOpen} onClick={onClose} aria-hidden="true" />
 
       <aside className={styles.sidebar} data-open={isOpen} aria-hidden={!isOpen}>
         <div className={styles.header}>

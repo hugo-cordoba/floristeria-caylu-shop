@@ -26,12 +26,10 @@ export default function SearchDropdown({ isOpen = false, onClose, inline = false
   }, [inline, isOpen]);
 
   // Esta variante "inline" solo se usa en /search: si el popup del Header
-  // dejó el body bloqueado (position: fixed) antes de navegar, lo liberamos.
+  // dejó <html> con overflow bloqueado antes de navegar, lo liberamos.
   useEffect(() => {
     if (!inline) return;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
+    document.documentElement.style.overflow = '';
   }, [inline]);
 
   // El popup se queda abierto (con el loader) mientras Next prepara la

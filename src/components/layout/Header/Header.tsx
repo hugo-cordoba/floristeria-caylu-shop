@@ -13,8 +13,6 @@ import CartSidebar from '@/components/cart/CartSidebar/CartSidebar';
 import SearchDropdown from '@/components/product/SearchDropdown/SearchDropdown';
 import styles from './Header.module.css';
 import { usePathname } from 'next/navigation';
-import { useDelayedUnmount } from '@/hooks/use-delayed-unmount';
-import { useScrollLock } from '@/hooks/use-scroll-lock';
 
 interface HeaderProps {
   siteName: string;
@@ -57,7 +55,6 @@ export default function Header({
   const pathname = usePathname();
   const isSearchPage = pathname === '/search';
   const anyPanelOpen = searchOpen || authOpen || cartOpen;
-  const showMenuOverlay = useDelayedUnmount(menuOpen, 500);
 
   useEffect(() => {
     if (displayCartCount > prevCartCountRef.current) setCartBump(true);
@@ -69,7 +66,12 @@ export default function Header({
     prevWishlistCountRef.current = wishlistItemCount;
   }, [wishlistItemCount]);
 
-  useScrollLock(menuOpen || authOpen || searchOpen || cartOpen);
+  useEffect(() => {
+    document.documentElement.style.overflow = menuOpen || authOpen || searchOpen || cartOpen ? 'hidden' : '';
+    return () => {
+      document.documentElement.style.overflow = '';
+    };
+  }, [menuOpen, authOpen, searchOpen, cartOpen]);
 
   useEffect(() => {
     if (!menuOpen && !authOpen && !searchOpen && !cartOpen) return;
@@ -244,9 +246,7 @@ export default function Header({
 
       {!isSearchPage && <SearchDropdown isOpen={searchOpen} onClose={() => setSearchOpen(false)} />}
 
-      {showMenuOverlay && (
-        <div className={styles.overlay} data-open={menuOpen} onClick={() => setMenuOpen(false)} aria-hidden="true" />
-      )}
+      <div className={styles.overlay} data-open={menuOpen} onClick={() => setMenuOpen(false)} aria-hidden="true" />
 
       <aside id="site-sidebar" className={styles.sidebar} data-open={menuOpen} aria-hidden={!menuOpen}>
         <nav>
