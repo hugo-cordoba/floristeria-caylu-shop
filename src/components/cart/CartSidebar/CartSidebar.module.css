@@ -19,6 +19,7 @@
   top: 0;
   right: 0;
   height: 100vh;
+  height: 100dvh;
   width: min(440px, 92vw);
   background-color: #ffffff;
   color: var(--color-text);
