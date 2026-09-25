@@ -70,7 +70,7 @@ export default function Hero({ eyebrow, title, subtitle, media, ctaLabel, ctaHre
           <div className={styles.cta}>
             <Button href={ctaHref} variant="outline">
               {ctaLabel}
-              <ArrowRight aria-hidden="true" className={styles.ctaArrow} size={14} strokeWidth={1.75} />
+              <ArrowRight aria-hidden="true" className={styles.ctaArrow} size={12} strokeWidth={1.75} />
             </Button>
           </div>
         )}
