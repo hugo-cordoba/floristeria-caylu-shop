@@ -12,7 +12,6 @@ import { CookieConsentProvider } from '@/context/CookieConsentContext';
 import AuthSessionProvider from '@/context/AuthSessionProvider';
 import CookieConsentBanner from '@/components/layout/CookieConsent/CookieConsentBanner';
 import CookiePreferencesModal from '@/components/layout/CookieConsent/CookiePreferencesModal';
-import SafariScrollRunway from '@/components/layout/SafariScrollRunway/SafariScrollRunway';
 import './globals.css';
 import '@/lib/env';
 import { Inter, Great_Vibes } from "next/font/google";
@@ -50,25 +49,24 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="es" className={cn("font-sans", inter.variable, script.variable)}>
       <body style={themeVars}>
-        <SafariScrollRunway />
-        <div className="safari-runway">
-          <CookieConsentProvider>
-            <AuthSessionProvider>
-              <AuthProvider>
-                <CartProvider initialCart={initialCart}>
-                  <WishlistProvider initialItems={initialWishlist}>
-                    <AddressBookProvider>
-                      <OrdersProvider initialOrders={initialOrders}>{children}</OrdersProvider>
-                    </AddressBookProvider>
-                  </WishlistProvider>
-                </CartProvider>
-              </AuthProvider>
-            </AuthSessionProvider>
+        <CookieConsentProvider>
+          <AuthSessionProvider>
+            <AuthProvider>
+              <CartProvider initialCart={initialCart}>
+                <WishlistProvider initialItems={initialWishlist}>
+                  <AddressBookProvider>
+                    <OrdersProvider initialOrders={initialOrders}>{children}</OrdersProvider>
+                  </AddressBookProvider>
+                </WishlistProvider>
+              </CartProvider>
+            </AuthProvider>
+          </AuthSessionProvider>
 
-            <CookieConsentBanner />
-            <CookiePreferencesModal />
-          </CookieConsentProvider>
-        </div>
+          <CookieConsentBanner />
+          <CookiePreferencesModal />
+        </CookieConsentProvider>
+
+        <div className="ios-glass-bar" aria-hidden="true" />
       </body>
     </html>
   );

@@ -5,12 +5,20 @@
   z-index: 60;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  display: none;
+  transition: opacity 0.4s ease, display 0.4s allow-discrete;
 }
 
 .overlay[data-open='true'] {
+  display: block;
   opacity: 1;
   pointer-events: auto;
+}
+
+@starting-style {
+  .overlay[data-open='true'] {
+    opacity: 0;
+  }
 }
 
 .sidebar {
