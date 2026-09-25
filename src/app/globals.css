@@ -9,9 +9,14 @@
   padding: 0;
 }
 
+:root {
+  --safari-runway-offset: 48px;
+}
+
 html {
   scroll-behavior: smooth;
   overflow-y: scroll;
+  overscroll-behavior: none;
   background-color: var(--color-background);
 }
 
@@ -21,6 +26,17 @@ body {
   background-color: var(--color-background);
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-y: none;
+}
+
+/* iOS 26 Safari Liquid Glass: mantiene un scroll no-nulo desde el arranque
+   para que el toolbar compose pixeles reales en vez del color de fallback.
+   Solo se aplica en mobile (mismo breakpoint que el scroll compensatorio en
+   SafariScrollRunway): en desktop no hay compensacion por JS, asi que el
+   margen debe quedar fuera para no desplazar el layout permanentemente. */
+@media (max-width: 760px) {
+  .safari-runway {
+    margin-top: var(--safari-runway-offset);
+  }
 }
 
 h1, h2, h3 {
