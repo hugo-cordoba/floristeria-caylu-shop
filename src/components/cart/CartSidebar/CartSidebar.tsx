@@ -4,6 +4,7 @@
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import CartLineItem from '@/components/cart/CartLineItem/CartLineItem';
+import { useDelayedUnmount } from '@/hooks/use-delayed-unmount';
 import styles from './CartSidebar.module.css';
 
 interface CartSidebarProps {
@@ -13,10 +14,13 @@ interface CartSidebarProps {
 
 export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
   const { items, itemCount, subtotalFormatted, updateQuantity, removeItem } = useCart();
+  const showOverlay = useDelayedUnmount(isOpen, 400);
 
   return (
     <>
-      <div className={styles.overlay} data-open={isOpen} onClick={onClose} aria-hidden="true" />
+      {showOverlay && (
+        <div className={styles.overlay} data-open={isOpen} onClick={onClose} aria-hidden="true" />
+      )}
 
       <aside className={styles.sidebar} data-open={isOpen} aria-hidden={!isOpen}>
         <div className={styles.header}>

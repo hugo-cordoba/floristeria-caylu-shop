@@ -9,6 +9,20 @@
   padding: 0;
 }
 
+:root {
+  --safari-scroll-offset: 0px;
+}
+
+/* iOS 26 Safari only composites real page pixels behind the top status
+   bar once the document has scrolled off zero; below that it can fall
+   back to a solid sampled color. Nudging every page to a tiny non-zero
+   scroll on load (see SafariScrollRunway) avoids that fallback flash. */
+@media (max-width: 760px) {
+  :root {
+    --safari-scroll-offset: 32px;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   overflow-y: scroll;

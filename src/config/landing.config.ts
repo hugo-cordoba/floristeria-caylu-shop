@@ -29,13 +29,13 @@ export const landingSections: SectionConfig[] = [
     id: 'hero',
     type: 'hero',
     props: {
-      title: 'Flores para cada momento',
+      title: 'flores para cada ocasión',
       media: {
         type: 'image',
         src: '/banner.png',
         mobileSrc: '/banner-mobile.png',
       },
-      ctaLabel: 'Ver todos los productos',
+      ctaLabel: 'Comprar ahora',
       ctaHref: '/products',
     },
   },

@@ -60,7 +60,9 @@ export default function Hero({ eyebrow, title, subtitle, media, ctaLabel, ctaHre
         {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
         {ctaLabel && ctaHref && (
           <div className={styles.cta}>
-            <Button href={ctaHref} variant="outline">{ctaLabel}</Button>
+            <Button href={ctaHref} variant="outline">
+              {ctaLabel} <span aria-hidden="true">→</span>
+            </Button>
           </div>
         )}
       </div>

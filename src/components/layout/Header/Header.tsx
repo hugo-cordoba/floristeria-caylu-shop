@@ -13,6 +13,7 @@ import CartSidebar from '@/components/cart/CartSidebar/CartSidebar';
 import SearchDropdown from '@/components/product/SearchDropdown/SearchDropdown';
 import styles from './Header.module.css';
 import { usePathname } from 'next/navigation';
+import { useDelayedUnmount } from '@/hooks/use-delayed-unmount';
 
 interface HeaderProps {
   siteName: string;
@@ -55,6 +56,7 @@ export default function Header({
   const pathname = usePathname();
   const isSearchPage = pathname === '/search';
   const anyPanelOpen = searchOpen || authOpen || cartOpen;
+  const showMenuOverlay = useDelayedUnmount(menuOpen, 500);
 
   useEffect(() => {
     if (displayCartCount > prevCartCountRef.current) setCartBump(true);
@@ -246,7 +248,9 @@ export default function Header({
 
       {!isSearchPage && <SearchDropdown isOpen={searchOpen} onClose={() => setSearchOpen(false)} />}
 
-      <div className={styles.overlay} data-open={menuOpen} onClick={() => setMenuOpen(false)} aria-hidden="true" />
+      {showMenuOverlay && (
+        <div className={styles.overlay} data-open={menuOpen} onClick={() => setMenuOpen(false)} aria-hidden="true" />
+      )}
 
       <aside id="site-sidebar" className={styles.sidebar} data-open={menuOpen} aria-hidden={!menuOpen}>
         <nav>

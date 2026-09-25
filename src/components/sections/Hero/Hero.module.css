@@ -127,18 +127,38 @@
   }
 
   .content {
-    padding-bottom: 14vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 4vh;
     max-width: 100%;
-    text-align: center;
   }
 
   .title {
-    font-size: clamp(2rem, 9vw, 2.5rem);
+    align-self: flex-end;
+    text-align: right;
+    font-size: clamp(2.25rem, 10vw, 3rem);
     font-weight: 700;
   }
 
   .subtitle {
     max-width: 100%;
     font-size: 1rem;
+  }
+
+  .cta {
+    align-self: center;
+    margin-top: 12vh;
+  }
+
+  .cta a {
+    border-radius: 999px;
+    background-color: #ffffff;
+    color: var(--color-text);
+    border-color: transparent;
+    padding: 0.9rem 1.75rem;
+  }
+
+  .cta a:hover {
+    background-color: #f0f0f0;
   }
 }
