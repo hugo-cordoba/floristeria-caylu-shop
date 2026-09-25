@@ -65,8 +65,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <CookieConsentBanner />
           <CookiePreferencesModal />
         </CookieConsentProvider>
-
-        <div className="ios-glass-bar" aria-hidden="true" />
       </body>
     </html>
   );
