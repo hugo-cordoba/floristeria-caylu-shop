@@ -25,6 +25,7 @@
   align-items: center;
   justify-content: flex-start;
   gap: 0.25rem;
+  min-width: 0;
 }
 
 .iconButton {
@@ -154,6 +155,7 @@
   justify-content: flex-end;
   align-items: center;
   gap: 1.5rem;
+  min-width: 0;
 }
 
 .actionLink {

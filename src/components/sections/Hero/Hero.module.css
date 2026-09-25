@@ -1,7 +1,7 @@
 .hero {
   position: relative;
-  height: 90dvh;
-  max-height: 90dvh;
+  height: 90svh;
+  max-height: 90svh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -105,7 +105,7 @@
   }
 
   .hero {
-    height: 90dvh;
+    height: 90svh;
     justify-content: flex-end;
   }
 
@@ -139,6 +139,10 @@
     text-align: right;
     font-size: clamp(2.25rem, 10vw, 3rem);
     font-weight: 700;
+  }
+
+  .titleWord {
+    display: block;
   }
 
   .subtitle {

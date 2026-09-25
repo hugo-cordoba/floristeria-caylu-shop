@@ -56,7 +56,14 @@ export default function Hero({ eyebrow, title, subtitle, media, ctaLabel, ctaHre
 
       <div className={styles.content}>
         {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
-        <h1 className={styles.title}>{title}</h1>
+        <h1 className={styles.title}>
+          {title.split(' ').map((word, index, words) => (
+            <span key={index} className={styles.titleWord}>
+              {word}
+              {index < words.length - 1 ? ' ' : ''}
+            </span>
+          ))}
+        </h1>
         {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
         {ctaLabel && ctaHref && (
           <div className={styles.cta}>
