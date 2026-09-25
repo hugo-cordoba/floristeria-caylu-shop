@@ -154,7 +154,7 @@
 
   .cta {
     align-self: center;
-    margin-top: 26vh;
+    margin-top: 32vh;
   }
 
   .cta a {
@@ -162,8 +162,9 @@
     background-color: #ffffff;
     color: var(--color-text);
     border-color: transparent;
-    padding: 0.45rem 0.9rem;
-    font-size: 0.65rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.55rem;
+    text-transform: none;
   }
 
   .cta a:hover {
