@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 /**
  * Renders a tiny spacer at the very top of the document and scrolls past
@@ -9,9 +9,13 @@ import { useEffect } from 'react';
  * the page starts at a non-zero scrollY, which is what gets iOS 26 Safari
  * to composite real page pixels behind the top status bar instead of
  * falling back to a sampled color. See --safari-scroll-offset in globals.css.
+ *
+ * Uses useLayoutEffect (not useEffect) so the scroll happens before the
+ * browser paints the first frame - otherwise the page briefly renders at
+ * scrollY 0 and then visibly jumps, which looks like the hero image moving.
  */
 export default function SafariScrollRunway() {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const offset =
       Number.parseFloat(
         getComputedStyle(document.documentElement).getPropertyValue('--safari-scroll-offset'),

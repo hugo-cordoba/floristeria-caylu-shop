@@ -14,6 +14,7 @@ import SearchDropdown from '@/components/product/SearchDropdown/SearchDropdown';
 import styles from './Header.module.css';
 import { usePathname } from 'next/navigation';
 import { useDelayedUnmount } from '@/hooks/use-delayed-unmount';
+import { useScrollLock } from '@/hooks/use-scroll-lock';
 
 interface HeaderProps {
   siteName: string;
@@ -68,12 +69,7 @@ export default function Header({
     prevWishlistCountRef.current = wishlistItemCount;
   }, [wishlistItemCount]);
 
-  useEffect(() => {
-    document.documentElement.style.overflow = menuOpen || authOpen || searchOpen || cartOpen ? 'hidden' : '';
-    return () => {
-      document.documentElement.style.overflow = '';
-    };
-  }, [menuOpen, authOpen, searchOpen, cartOpen]);
+  useScrollLock(menuOpen || authOpen || searchOpen || cartOpen);
 
   useEffect(() => {
     if (!menuOpen && !authOpen && !searchOpen && !cartOpen) return;
