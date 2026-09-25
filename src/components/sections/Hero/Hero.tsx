@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 import Button from '@/components/ui/Button/Button';
 import { siteConfig } from '@/config/site.config';
 import type { HeroProps } from '@/types/section.types';
@@ -68,7 +69,8 @@ export default function Hero({ eyebrow, title, subtitle, media, ctaLabel, ctaHre
         {ctaLabel && ctaHref && (
           <div className={styles.cta}>
             <Button href={ctaHref} variant="outline">
-              {ctaLabel} <span aria-hidden="true" className={styles.ctaArrow}>→</span>
+              {ctaLabel}
+              <ArrowRight aria-hidden="true" className={styles.ctaArrow} size={14} strokeWidth={1.75} />
             </Button>
           </div>
         )}
