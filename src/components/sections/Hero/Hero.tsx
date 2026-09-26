@@ -1,11 +1,22 @@
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Truck } from 'lucide-react';
 import Button from '@/components/ui/Button/Button';
 import { siteConfig } from '@/config/site.config';
 import type { HeroProps } from '@/types/section.types';
 import styles from './Hero.module.css';
 
-export default function Hero({ eyebrow, title, subtitle, media, ctaLabel, ctaHref, navLinks }: HeroProps) {
+export default function Hero({
+  eyebrow,
+  title,
+  subtitle,
+  media,
+  ctaLabel,
+  ctaHref,
+  secondaryInfo,
+  mobileTitle,
+  mobileCtaLabel,
+  navLinks,
+}: HeroProps) {
   return (
     <header className={styles.hero}>
       {media.type === 'video' ? (
@@ -57,20 +68,39 @@ export default function Hero({ eyebrow, title, subtitle, media, ctaLabel, ctaHre
 
       <div className={styles.content}>
         {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
-        <h1 className={styles.title}>
-          {title.split(' ').map((word, index, words) => (
-            <span key={index} className={styles.titleWord}>
+        <h1 className={styles.title}>{title}</h1>
+        {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+        {ctaLabel && ctaHref && (
+          <div className={styles.cta}>
+            <Button href={ctaHref} variant="primary">
+              {ctaLabel}
+              <ArrowRight aria-hidden="true" className={styles.ctaArrow} size={14} strokeWidth={1.75} />
+            </Button>
+          </div>
+        )}
+        {secondaryInfo && (
+          <p className={styles.secondaryInfo}>
+            <Truck aria-hidden="true" className={styles.secondaryIcon} size={14} strokeWidth={1.5} />
+            {secondaryInfo}
+          </p>
+        )}
+      </div>
+
+      {/* Bloque mobile: replica exacta del hero original (texto y diseño previos, sin cambios) */}
+      <div className={styles.contentMobile}>
+        <p className={styles.titleMobile}>
+          {(mobileTitle ?? title).split(' ').map((word, index, words) => (
+            <span key={index} className={styles.titleWordMobile}>
               {word}
               {index < words.length - 1 ? ' ' : ''}
             </span>
           ))}
-        </h1>
-        {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
-        {ctaLabel && ctaHref && (
-          <div className={styles.cta}>
+        </p>
+        {ctaHref && (mobileCtaLabel ?? ctaLabel) && (
+          <div className={styles.ctaMobile}>
             <Button href={ctaHref} variant="outline">
-              {ctaLabel}
-              <ArrowRight aria-hidden="true" className={styles.ctaArrow} size={12} strokeWidth={1.75} />
+              {mobileCtaLabel ?? ctaLabel}
+              <ArrowRight aria-hidden="true" className={styles.ctaArrowMobile} size={12} strokeWidth={1.75} />
             </Button>
           </div>
         )}

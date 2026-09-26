@@ -18,6 +18,9 @@ export interface HeroProps {
   };
   ctaLabel?: string;
   ctaHref?: string;
+  secondaryInfo?: string;
+  mobileTitle?: string;
+  mobileCtaLabel?: string;
   navLinks?: NavLink[];
 }
 

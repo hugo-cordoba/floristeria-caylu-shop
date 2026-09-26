@@ -1,10 +1,11 @@
 .hero {
   position: relative;
-  height: 90svh;
-  max-height: 90svh;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  align-items: center;
+  height: 78vh;
+  min-height: 560px;
+  max-height: 820px;
+  padding-left: 5vw;
   overflow: hidden;
   color: var(--color-background);
 }
@@ -26,7 +27,13 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.55) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.58) 0%,
+    rgba(0, 0, 0, 0.42) 28%,
+    rgba(0, 0, 0, 0.18) 50%,
+    rgba(0, 0, 0, 0) 72%
+  );
   z-index: 1;
 }
 
@@ -64,8 +71,11 @@
 .content {
   position: relative;
   z-index: 2;
-  padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
-  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 520px;
+  margin-top: clamp(1rem, 3vh, 2.5rem);
 }
 
 .eyebrow {
@@ -80,23 +90,78 @@
 
 .title {
   font-family: var(--font-heading);
-  font-size: clamp(2.25rem, 4.2vw, 3.25rem);
-  line-height: 1.15;
+  font-size: clamp(2.75rem, 5.2vw, 4.75rem);
+  line-height: 1.08;
   font-weight: 400;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
+  margin: 0;
 }
 
 .subtitle {
-  margin-top: 1rem;
-  font-size: 0.95rem;
+  margin-top: 1.1rem;
+  font-size: clamp(1.125rem, 1.35vw, 1.25rem);
   font-weight: 300;
   line-height: 1.6;
-  max-width: 420px;
-  opacity: 0.85;
+  max-width: 500px;
+  opacity: 0.88;
 }
 
 .cta {
-  margin-top: 2rem;
+  margin-top: 2.25rem;
+}
+
+.cta a,
+.cta button {
+  min-width: 200px;
+  height: 52px;
+  padding: 0 1.75rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  background-color: #5c8a63;
+  border-color: transparent;
+  border-radius: 10px;
+}
+
+.cta a:hover,
+.cta button:hover {
+  background-color: #6c9c73;
+}
+
+.ctaArrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.6rem;
+  flex-shrink: 0;
+}
+
+.secondaryInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  opacity: 0.82;
+}
+
+.secondaryIcon {
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.contentMobile {
+  display: none;
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero {
+    padding-left: 6vw;
+  }
+
+  .content {
+    max-width: min(520px, 46vw);
+  }
 }
 
 @media (max-width: 640px) {
@@ -106,6 +171,12 @@
 
   .hero {
     height: 90svh;
+    min-height: 0;
+    max-height: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     justify-content: flex-end;
   }
 
@@ -121,52 +192,60 @@
     background: none;
   }
 
+  /* El bloque "nuevo" (desktop/tablet) no se muestra en mobile */
   .content {
+    display: none;
+  }
+
+  /* El bloque mobile replica exactamente el hero original: mismo texto y mismo diseño */
+  .contentMobile {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
-    padding-bottom: 4vh;
+    padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem) 4vh;
     max-width: 100%;
   }
 
-  .title {
+  .titleMobile {
+    font-family: var(--font-heading);
     align-self: flex-end;
     text-align: right;
     font-size: clamp(2.8rem, 12vw, 3.8rem);
     font-weight: 900;
     letter-spacing: -0.045em;
     line-height: 0.85;
+    margin: 0;
   }
 
-  .titleWord {
+  .titleWordMobile {
     display: block;
   }
 
-  .subtitle {
-    max-width: 100%;
-    font-size: 1rem;
-  }
-
-  .cta {
+  .ctaMobile {
     align-self: center;
     margin-top: 32vh;
   }
 
-  .cta a {
+  .ctaMobile a,
+  .ctaMobile button {
     border-radius: 999px;
-    background-color: #ffffff;
+    background-color: var(--color-background);
     color: var(--color-text);
     border-color: transparent;
     padding: 0.5rem 0.75rem;
     font-size: 0.6rem;
     font-weight: 500;
+    letter-spacing: normal;
     text-transform: none;
   }
 
-  .cta a:hover {
+  .ctaMobile a:hover,
+  .ctaMobile button:hover {
     background-color: #f0f0f0;
   }
 
-  .ctaArrow {
+  .ctaArrowMobile {
     display: inline-flex;
     align-items: center;
     justify-content: center;

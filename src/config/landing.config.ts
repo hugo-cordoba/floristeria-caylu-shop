@@ -29,14 +29,18 @@ export const landingSections: SectionConfig[] = [
     id: 'hero',
     type: 'hero',
     props: {
-      title: 'flores para cada ocasión',
+      title: 'Flores que cuentan historias',
+      subtitle: 'Ramos y composiciones florales diseñados para regalar, celebrar y hacer especial cualquier día.',
       media: {
         type: 'image',
         src: '/banner.png',
         mobileSrc: '/banner-mobile.png',
       },
-      ctaLabel: 'Comprar ahora',
+      ctaLabel: 'Descubrir colección',
       ctaHref: '/products',
+      secondaryInfo: 'Entrega en Madrid',
+      mobileTitle: 'flores para cada ocasión',
+      mobileCtaLabel: 'Comprar ahora',
     },
   },
   {

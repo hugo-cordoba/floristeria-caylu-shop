@@ -14,11 +14,16 @@ import CookieConsentBanner from '@/components/layout/CookieConsent/CookieConsent
 import CookiePreferencesModal from '@/components/layout/CookieConsent/CookiePreferencesModal';
 import './globals.css';
 import '@/lib/env';
-import { Inter, Great_Vibes } from "next/font/google";
+import { Inter, Great_Vibes, Cormorant_Garamond } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const script = Great_Vibes({ subsets: ['latin'], weight: '400', variable: '--font-script' });
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-cormorant',
+});
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -42,12 +47,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     '--color-surface': siteConfig.colors.surface,
     '--color-text': siteConfig.colors.text,
     '--color-text-muted': siteConfig.colors.textMuted,
-    '--font-heading': `'Helvetica', Arial, sans-serif`,
-    '--font-body': `'Helvetica', Arial, sans-serif`,
+    '--font-heading': `var(--font-cormorant), Georgia, serif`,
+    '--font-body': `var(--font-cormorant), Georgia, serif`,
   } as React.CSSProperties;
 
   return (
-    <html lang="es" className={cn("font-sans", inter.variable, script.variable)}>
+    <html lang="es" className={cn("font-sans", inter.variable, script.variable, cormorant.variable)}>
       <body style={themeVars}>
         <CookieConsentProvider>
           <AuthSessionProvider>

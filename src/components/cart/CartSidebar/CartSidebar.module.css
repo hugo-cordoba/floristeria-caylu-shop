@@ -21,7 +21,7 @@
   height: 100vh;
   height: 100dvh;
   width: min(440px, 92vw);
-  background-color: #ffffff;
+  background-color: var(--color-background);
   color: var(--color-text);
   z-index: 70;
   display: flex;
